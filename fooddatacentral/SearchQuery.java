@@ -66,7 +66,7 @@ public class SearchQuery {
     /**
      * Sets page size to new value. Cannot be negative.
      * @param pageSize new page size
-     * @throws IllegalArgumentException if pageSize < 0
+     * @throws IllegalArgumentException if pageSize &lt; 0
      */
     public void setPageSize(int pageSize) {}
 
