@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"fooddatacentral","l":"Food"},{"p":"fooddatacentral","l":"Nutrient"},{"p":"fooddatacentral","l":"NutrientType"},{"p":"fooddatacentral","l":"Units"}];updateSearchResults();
