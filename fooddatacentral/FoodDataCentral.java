@@ -8,7 +8,7 @@ import java.util.Optional;
  * FoodDataCentral class that wraps the REST API provided by the FDC.
  * Must be instantiated with an API key to utilize.
  */
-class FoodDataCentral {
+public class FoodDataCentral {
 
     /**
      * Constructor for the FoodDataCentral class.
@@ -24,7 +24,7 @@ class FoodDataCentral {
      * @param fdcId the id of the food item to retrieve
      * @return an Optional of the Food item. Present if the item was returned from the API, empty if not.
      */
-    Optional<Food> getFood(String fdcId) {
+    public Optional<Food> getFood(String fdcId) {
         return null;
     }
 
@@ -36,7 +36,7 @@ class FoodDataCentral {
      * @return an Iterator of all found food items
      * @throws IllegalArgumentException if the parameter is null or exceeds a size of 20 items.
      */
-    Iterator<Food> getFoods(List<String> fdcIds) {
+    public Iterator<Food> getFoods(List<String> fdcIds) {
         return null;
     }
 
@@ -47,7 +47,7 @@ class FoodDataCentral {
      * @param pageNumber which page to return
      * @return an iterator containing all the food items on the corresponding page for the currently set page size.
      */
-    Iterator<Food> listFoods(int pageNumber) {
+    public Iterator<Food> listFoods(int pageNumber) {
         return null;
     }
 
@@ -61,7 +61,7 @@ class FoodDataCentral {
      * @param sortOrder the order to sort the food
      * @return an iterator containing all the food items on the corresponding page for the currently set page size.
      */
-    Iterator<Food> listFoods(int pageNumber, FoodSortableAttributes sortBy, SortOrder sortOrder) {
+    public Iterator<Food> listFoods(int pageNumber, FoodSortableAttributes sortBy, SortOrder sortOrder) {
         return null;
     }
 
@@ -75,7 +75,7 @@ class FoodDataCentral {
      * Sets page size returned in listFoods to specified number.
      * Note that the performance of listFoods may be impacted by larger numbers.
      * @param pageSize number that each page will return in listFoods. Cannot be negative.
-     * @throws IllegalArgumentException if pageSize < 0.
+     * @throws IllegalArgumentException if {@code pageSize < 0}.
      */
     public void setPageSize(int pageSize) {}
 
@@ -86,7 +86,7 @@ class FoodDataCentral {
      * @return iterator of the found food items. If not found, will be empty
      * @throws NullPointerException for null argument
      */
-    Iterator<Food> searchFoods(SearchQuery query) {
+    public Iterator<Food> searchFoods(SearchQuery query) {
         return null;
     }
 }
