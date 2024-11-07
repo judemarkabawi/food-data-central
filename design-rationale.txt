@@ -7,11 +7,16 @@ The REST API of FoodData Central has the following endpoints:
     - GET /v1/json-spec Returns this documentation in JSON format
     - GET /v1/yaml-spec Returns this documentation in YAML format
 
-Since our API is wrapping the REST API, we decided to have four static methods for 
+Since our API is wrapping the REST API, we decided to have four methods for 
 the main functionalities: getFood(), getFoods(), listFoods(), and searchFoods(). All 
 four methods are within the FoodDataCentral class, which is the main class that clients 
 should use to interact with this API. The documentation specification endpoints are naturally
 discarded for being unnecessary.
+
+============= AUTHENTICATION =============
+The FDC API requires an API key to use. Our API object can only be successfully constructed
+with a valid API key, which then ensures the ability to use the rest of the API without needing
+to pass an API key manually with every request.
 
 ============= FOOD =============
 The data types that the FDC API return are rather heavy-weighted. For example, for just the 
