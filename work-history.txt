@@ -1,0 +1,9 @@
+Sprint 1
+- [All] During group meeting, we discussed API design & requirements and assigned tasks to each individual
+- [Jude] Wrote Food.java, Nutrient.java, NutrientType.java, Units.java
+- [Andrew] Wrote FoodDataCentral.java, FoodSortableAttributes, SearchQuery, SortOrder
+- [Jude] Set up GitHub pages
+- [Zihe] Fix warnings and small updates to design
+- [Zihe] Wrote README.md, package-info.java, design rationale, and made slideshow
+- [Randy] Wrote requirements doc
+- [Randy] Updated and polished design rationale

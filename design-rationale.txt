@@ -1,0 +1,35 @@
+============= MAIN FUNCTIONALITIES =============
+The REST API of FoodData Central has the following methods:
+    - GET /v1/food/{fdcId}: Fetches details for one food item by FDC ID
+    - GET/POST /v1/foods: Fetches details for multiple food items using input FDC IDs, up to 20 items
+    - GET/POST /v1/foods/list: Returns a paged list of foods, in the 'abridged' format
+    - GET/POST /v1/foods/search: Returns a list of foods that matched search (query) keywords
+    - GET /v1/json-spec Returns this documentation in JSON format
+    - GET /v1/yaml-spec Returns this documentation in YAML format
+
+Since our API is wrapping the REST API, we decided to have four methods for 
+the main functionalities: getFood(), getFoods(), listFoods(), and searchFoods(). All 
+four methods are within the FoodDataCentral class, which is the main class that clients 
+should use to interact with this API.
+
+============= FOOD =============
+The data types that the FDC API return are rather heavy-weighted. For example, for just the 
+food items, there are different data types including AbridgedFoodItem, BrandedFoodItem, 
+FoundationFoodItem, etc. AbridgedFoodItem only includes the most essential information while
+the rest are "full" versions that records an abundance of details. To make our API more 
+scalable and intuitive to use, we decide to only have one Food class to represent all foods. 
+We only kept a selection of fields from all the fields in the original data types. Upon 
+retrieving the data, our backend only requests the abridged version. For get methods on fields 
+from the full version, we will use lazy load -- that is, the backend only request a full version 
+when clients attempt to get the data.
+
+============= PAGINATION =============
+The original FDC API supports pagination for foods/list and foods/search. We want to keep this 
+functionality in our API. We are still figuring out the best way to implement pagination, but 
+currently we are using java Iterator.
+
+============= NUTRIENT =============
+The FDC API has several data types related to Nutrient information. For scalability, we currently 
+are only keeping four pieces of information for each Nutrient class -- the amount, the nutriet's 
+id, nutriet type, and unit. For nutriet type and unit, the original API kept them in String format.
+However, we changed them into enum for type safety.
