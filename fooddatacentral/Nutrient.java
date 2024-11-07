@@ -17,7 +17,7 @@ public class Nutrient {
      * 
      * @return the nutrient ID
      */
-    long getId() {
+    public long getId() {
         return 0;
     }
 
@@ -26,7 +26,7 @@ public class Nutrient {
      * 
      * @return the nutrient type
      */
-    NutrientType getNutrientType() {
+    public NutrientType getNutrientType() {
         return NutrientType.PROTEIN;
     }
 
@@ -35,7 +35,7 @@ public class Nutrient {
      * 
      * @return the units of the nutrient
      */
-    Units getUnits() {
+    public Units getUnits() {
         return Units.GRAMS;
     }
 
@@ -44,7 +44,7 @@ public class Nutrient {
      * 
      * @return the nutrient value
      */
-    float getAmount() {
+    public float getAmount() {
         return 0;
     }
 }
