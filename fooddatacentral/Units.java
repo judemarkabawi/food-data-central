@@ -4,13 +4,37 @@ package fooddatacentral;
  * Enum representing different units of measurement for nutrients and serving sizes.
  */
 public enum Units {
+    /**
+     * Unit in micrograms (µg).
+     */
     MICROGRAMS("µg"),
+    /**
+     * Unit in milligrams (mg).
+     */
     MILLIGRAMS("mg"),
+    /**
+     * Unit in grams (g).
+     */
     GRAMS("g"),
+    /**
+     * Unit in milliliters (mL).
+     */
     KILOCALORIES("kcal"),
+    /**
+     * Unit in ounces (oz).
+     */
     OUNCES("oz"),
+    /**
+     * Unit in teaspoons (tsp).
+     */
     TEASPOONS("tsp"),
+    /**
+     * Unit in tablespoons (tbsp).
+     */
     TABLESPOONS("tbsp"),
+    /**
+     * Unit in cups (cup).
+     */
     CUPS("cup");
 
     private final String unit;
