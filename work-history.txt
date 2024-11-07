@@ -5,5 +5,6 @@ Sprint 1
 - [Jude] Set up GitHub pages
 - [Zihe] Fix warnings and small updates to design
 - [Zihe] Wrote README.md, package-info.java, design rationale, and made slideshow
+- [Zihe] Wrote client code
 - [Randy] Wrote requirements doc
 - [Randy] Updated and polished design rationale
