@@ -4,6 +4,13 @@ package fooddatacentral;
  * Represents a specific nutrient in a food item, with its type, value, and units.
  */
 public class Nutrient {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private Nutrient() {
+
+    }
     
     /**
      * Gets the unique identifier for the nutrient.
