@@ -8,3 +8,4 @@ Sprint 1
 - [Zihe] Wrote client code
 - [Randy] Wrote requirements doc
 - [Randy] Updated and polished design rationale
+- [Jude] Updates to design rationale
