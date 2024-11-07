@@ -10,6 +10,13 @@ import java.util.List;
  * BrandedFoodItem in the Food Data Central API.
  */
 public class Food {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private Food () {
+
+    }
     
     /**
      * Gets the unique identifier for the food item.
