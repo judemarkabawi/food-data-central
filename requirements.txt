@@ -1,0 +1,17 @@
+Our API represents access to a database of food information provided by the FoodData Central, through the USDA. Primarily, this 
+API is interacted with through searching functionality, either based on ID, or generalized search criteria. For the purposes of 
+this API, food IDs are known as “FDC IDs” and are assigned by the database itself.
+
+Foods returned by standard search methods are represented as instantiated immutable objects exposing all of their attributes as 
+defined by the underlying database, including brand owner, ingredients list, and serving size. Food objects additionally track 
+the nutrients appearing on their labels, which constitute a separate class of instantiated objects as described below. Food objects 
+have no other behaviors.
+
+Nutrient objects are defined with respect to a particular food, since they are parameterized by the quantity with which they appear 
+within the food item. Auxiliary information of base unit, nutrient type (enumerated), and ID also parameterize nutrient instances, 
+and they have no other behavior.
+
+Searching on the database can be done either by ID or a search query. ID searches can be optionally batched for ease of use, and 
+simply return the food items with the corresponding ID(s). For searching based on querying, this is done utilizing a String query 
+(mimicking the original REST API), but with additional power relating to the sorting order returned by the methods. Pagination is 
+dealt with using page numbers due to the relatively static nature of the database.
