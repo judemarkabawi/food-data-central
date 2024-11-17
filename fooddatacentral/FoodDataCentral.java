@@ -57,11 +57,11 @@ public class FoodDataCentral {
      * Specify what attribute of the food to order by and how to order it.
      * Returns an empty iterator for any invalid page number.
      * @param pageNumber which page to return
-     * @param sortBy which attribute to sort by
+     * @param sortBy list of which attribute to sort by, prioritizes first item in list, then proceeding items
      * @param sortOrder the order to sort the food
      * @return an iterator containing all the food items on the corresponding page for the currently set page size.
      */
-    public Iterator<Food> listFoods(int pageNumber, FoodSortableAttributes sortBy, SortOrder sortOrder) {
+    public Iterator<Food> listFoods(int pageNumber, List<FoodSortableAttributes> sortBy, SortOrder sortOrder) {
         return null;
     }
 
