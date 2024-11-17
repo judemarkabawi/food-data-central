@@ -1,5 +1,7 @@
 package fooddatacentral;
 
+import java.util.List;
+
 /**
  * Search query class utilized for the search function in FoodDataCentral.
  * If not specified, the search will default to the following:
@@ -96,9 +98,9 @@ public class SearchQuery {
 
     /**
      * Set sort by to new value.
-     * @param sortBy new column/attribute to sort by
+     * @param sortBy list of new column/attribute to sort by, prioritizes first item in list then proceeding items
      */
-    public void setSortBy(FoodSortableAttributes sortBy) {}
+    public void setSortBy(List<FoodSortableAttributes> sortBy) {}
 
     /**
      * Returns current sort order. Null if there is none.

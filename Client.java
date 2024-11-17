@@ -43,7 +43,7 @@ public class Client {
 
         // Get the 11th page of foods but sort them in ascending order by name of food
         Iterator<Food> foodsPageSorted = fdc.listFoods(
-            11, FoodSortableAttributes.NAME, SortOrder.ASCENDING);
+            11, List.of(FoodSortableAttributes.NAME), SortOrder.ASCENDING);
         while (foodsPage.hasNext()) {
             Food food = foodsPage.next();
             // Do something with the food
