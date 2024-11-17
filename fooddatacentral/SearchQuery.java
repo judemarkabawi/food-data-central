@@ -1,6 +1,7 @@
 package fooddatacentral;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -152,7 +153,7 @@ public class SearchQuery {
      * @return copy of list of attributes to sort by
      */
     public List<FoodSortableAttributes> getSortBy() {
-        return new ArrayList<FoodSortableAttributes>(this.sortBy);
+        return Collections.unmodifiableList(this.sortBy);
     }
 
     /**
