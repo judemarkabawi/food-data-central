@@ -35,7 +35,9 @@ public enum Units {
     /**
      * Unit in cups (cup).
      */
-    CUPS("cup");
+    CUPS("cup"),
+
+    UNKNOWN("unknown unit");
 
     private final String unit;
 
