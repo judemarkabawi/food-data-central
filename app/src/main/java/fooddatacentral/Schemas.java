@@ -69,11 +69,23 @@ class Schemas {
      * (Implementation) Abstracts the FoodItem (currently just AbridgedFoodItem and BrandedFoodItem).
      */
     interface FoodItem {
+        /* AbridgedFoodItem and BrandedFoodItem -- */
         String getDataType();
         String getDescription();
         int getFdcId();
-        List<FoodNutrient> getFoodNutrients();
         String getPublicationDate();
+
+        /* -- AbridgedFoodItem and BrandedFoodItem, but pretend only BrandedFoodItem -- */
+
+        /* This makes it easier than implementing AbridgedFoodNutrient and caring about
+         * the distinction, but yeah it will be less efficient if you're only using the nutrients
+         * for a food and don't need any other food item info. However, that is very rare because
+         * if you're looking for nutrients you're probably going to need the serving size too,
+         * in which case you're going to need the full food item info anyway.
+         */
+        default Optional<List<FoodNutrient>> getFoodNutrients() { return Optional.empty(); };
+
+        /* -- BrandedFoodItem only -- */
         default Optional<String> getAvailableDate() { return Optional.empty(); }
         default Optional<String> getBrandOwner() { return Optional.empty(); }
         default Optional<String> getDataSource() { return Optional.empty(); }
@@ -126,11 +138,6 @@ class Schemas {
         @Override
         public int getFdcId() {
             return fdcId;
-        }
-
-        @Override
-        public List<FoodNutrient> getFoodNutrients() {
-            return null;
         }
 
         @Override
@@ -211,59 +218,57 @@ class Schemas {
         public int getFdcId() {
             return fdcId;
         }
-
-        @Override
-        public List<FoodNutrient> getFoodNutrients() {
-            return null;
-        }
-
         @Override
         public String getPublicationDate() {
             return publicationDate;
         }
 
         @Override
+        public Optional<List<FoodNutrient>> getFoodNutrients() {
+            return Optional.of(foodNutrients);
+        }
 
+        @Override
         public Optional<String> getAvailableDate() {
             return Optional.of(availableDate);
         }
-        @Override
 
+        @Override
         public Optional<String> getBrandOwner() {
             return Optional.of(brandOwner);
         }
-        @Override
 
+        @Override
         public Optional<String> getDataSource() {
             return Optional.of(dataSource);
         }
-        @Override
 
+        @Override
         public Optional<String> getFoodClass() {
             return Optional.of(foodClass);
         }
-        @Override
 
+        @Override
         public Optional<String> getGtinUpc() {
             return Optional.of(gtinUpc);
         }
-        @Override
 
+        @Override
         public Optional<String> getHouseholdServingFullText() {
             return Optional.of(householdServingFullText);
         }
-        @Override
 
+        @Override
         public Optional<String> getIngredients() {
             return Optional.of(ingredients);
         }
-        @Override
 
+        @Override
         public Optional<String> getModifiedDate() {
             return Optional.of(modifiedDate);
         }
-        @Override
 
+        @Override
         public Optional<Double> getServingSize() {
             return Optional.of(servingSize);
         }

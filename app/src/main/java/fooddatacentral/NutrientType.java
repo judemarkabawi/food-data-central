@@ -1,55 +1,42 @@
 package fooddatacentral;
 
+import java.util.Arrays;
+
 /**
  * Enum representing various types of nutrients that a food item can contain.
  */
 public enum NutrientType {
+    ENERGY("Energy"),
+    ADDED_SUGARS("Sugars, added"),
+    TRANS_FAT("Fatty acids, total trans"),
+    FIBER("Fiber, total dietary"),
+    IRON("Iron, Fe"),
+    PROTEIN("Protein"),
+    CHOLESTEROL("Cholesterol"),
+    SATURATED_FAT("Fatty acids, total saturated"),
+    TOTAL_SUGARS("Total Sugars"),
+    SODIUM("Sodium, Na"),
+    VITAMIN_D("Vitamin D (D2 + D3), International Units"),
+    POTASSIUM("Potassium, K"),
+    CARBOHYDRATE("Carbohydrate, by difference"),
+    TOTAL_FAT("Total lipid (fat)"),
+    CALCIUM("Calcium, Ca"),
+    UNKNOWN("Unknown");
+
+    /** According to FDC FoodData API */
+    private final String nutrientName;
+
     /**
-     * Nutrient type representing carbohydrates.
+     * Constructor for the Units enum.
+     * 
+     * @param unit the string representation of the unit
      */
-    CARBOHYDRATE,
-    /**
-     * Nutrient type representing fat.
-     */
-    FAT,
-    /**
-     * Nutrient type representing saturated fat.
-     */
-    SATURATED_FAT,
-    /**
-     * Nutrient type representing trans fat.
-     */
-    TRANS_FAT,
-    /**
-     * Nutrient type representing cholesterol.
-     */
-    CHOLESTEROL,
-    /**
-     * Nutrient type representing fiber.
-     */
-    FIBER,
-    /**
-     * Nutrient type representing sugar.
-     */
-    SUGARS,
-    /**
-     * Nutrient type representing protein.
-     */
-    PROTEIN,
-    /**
-     * Nutrient type representing calcium.
-     */
-    CALCIUM,
-    /**
-     * Nutrient type representing iron.
-     */
-    IRON,
-    /**
-     * Nutrient type representing potassium.
-     */
-    POTASSIUM,
-    /**
-     * Nutrient type representing sodium.
-     */
-    SODIUM,
+    NutrientType(String nutrientName) {
+        this.nutrientName = nutrientName;
+    }
+
+    public static NutrientType fromString(String nutrientName) {
+        return Arrays.stream(NutrientType.values()).filter(nutrient -> nutrient.nutrientName.equals(nutrientName))
+                .findFirst().orElse(NutrientType.UNKNOWN);
+    }
 }

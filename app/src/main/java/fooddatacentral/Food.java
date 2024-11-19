@@ -11,11 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fooddatacentral.Schemas.BrandedFoodItem;
 import fooddatacentral.Schemas.FoodItem;
+import fooddatacentral.Schemas.FoodNutrient;
 
 /**
  * Represents a food item with various attributes.
@@ -168,33 +170,18 @@ public class Food {
      */
     public Units getServingSizeUnits() {
         String units = getPropertyWithLoad(FoodItem::getServingSizeUnit);
-        if (units == "µg") {
-            return Units.MICROGRAMS;
-        } else if (units == "mg") {
-            return Units.MILLIGRAMS;
-        } else if (units == "g") {
-            return Units.GRAMS;
-        } else if (units == "kcal") {
-            return Units.KILOCALORIES;
-        } else if (units == "oz") {
-            return Units.OUNCES;
-        } else if (units == "tsp") {
-            return Units.TEASPOONS;
-        } else if (units == "tbsp") {
-            return Units.TABLESPOONS;
-        } else if (units == "cup") {
-            return Units.CUPS;
-        } else {
-            return Units.UNKNOWN;
-        }
+        return Units.fromString(units);
     }
 
     /**
-     * Gets the list of nutrients labeled for the food item.
+     * Gets the list of nutrients listed for the food item.
      * 
-     * @return a list of labeled nutrients
+     * @return a list of nutrients listed for the food item.
      */
-    public List<Nutrient> getLabelNutrients() {
-        return null;
+    public List<Nutrient> getNutrients() {
+        List<FoodNutrient> foodNutrients = getPropertyWithLoad(FoodItem::getFoodNutrients);
+        List<Nutrient> nutrients = foodNutrients.stream().map(foodNutrient -> new Nutrient(foodNutrient))
+                .collect(Collectors.toList());
+        return nutrients;
     }
 }
