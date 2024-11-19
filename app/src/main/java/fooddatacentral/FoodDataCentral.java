@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fooddatacentral.Schemas.AbridgedFoodItem;
 import fooddatacentral.Schemas.BrandedFoodItem;
 import fooddatacentral.Schemas.SearchResult;
 
@@ -107,15 +108,15 @@ public class FoodDataCentral {
         if (pageSize < 1) {
             throw new IllegalArgumentException("Page size cannot be less than 1.");
         }
-        String dataTypeQuery = "?dataType=Branded";
+        String dataTypeQuery = "&dataType=Branded";
         HttpResponse<String> response = Utility
                 .sendApiRequest(withApiKeyParam(Utility.API_FOOD_LIST_URL) + dataTypeQuery
                         + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize);
 
         //Parse
         ObjectMapper mapper = new ObjectMapper();
-        List<BrandedFoodItem> brandedFoods = mapper.readValue(response.body(),
-                new TypeReference<List<BrandedFoodItem>>() {
+        List<AbridgedFoodItem> brandedFoods = mapper.readValue(response.body(),
+                new TypeReference<List<AbridgedFoodItem>>() {
                 });
         Iterator<Food> foods = brandedFoods.stream().map(food -> new Food(food, apiKey)).toList().iterator();
         return foods;
@@ -139,7 +140,7 @@ public class FoodDataCentral {
         if (pageSize < 1) {
             throw new IllegalArgumentException("Page size cannot be less than 1.");
         }
-        String dataTypeQuery = "?dataType=Branded";
+        String dataTypeQuery = "&dataType=Branded";
         HttpResponse<String> response = Utility
                 .sendApiRequest(withApiKeyParam(Utility.API_FOOD_LIST_URL) + dataTypeQuery
                         + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize
@@ -147,8 +148,8 @@ public class FoodDataCentral {
 
         //Parse
         ObjectMapper mapper = new ObjectMapper();
-        List<BrandedFoodItem> brandedFoods = mapper.readValue(response.body(),
-                new TypeReference<List<BrandedFoodItem>>() {
+        List<AbridgedFoodItem> brandedFoods = mapper.readValue(response.body(),
+                new TypeReference<List<AbridgedFoodItem>>() {
                 });
         Iterator<Food> foods = brandedFoods.stream().map(food -> new Food(food, apiKey)).toList().iterator();
         return foods;
