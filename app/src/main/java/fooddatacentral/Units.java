@@ -1,7 +1,10 @@
 package fooddatacentral;
 
+import java.util.Arrays;
+
 /**
- * Enum representing different units of measurement for nutrients and serving sizes.
+ * Enum representing different units of measurement for nutrients and serving
+ * sizes.
  */
 public enum Units {
     /**
@@ -37,9 +40,12 @@ public enum Units {
      */
     CUPS("cup"),
 
+    /**
+     * Any other unit
+     */
     UNKNOWN("unknown unit");
 
-    private final String unit;
+    private final String unitName;
 
     /**
      * Constructor for the Units enum.
@@ -47,7 +53,7 @@ public enum Units {
      * @param unit the string representation of the unit
      */
     Units(String unit) {
-        this.unit = unit;
+        this.unitName = unit;
     }
 
     /**
@@ -56,6 +62,11 @@ public enum Units {
      * @return the unit as a string
      */
     public String getUnitString() {
-        return unit;
+        return unitName;
+    }
+
+    public static Units fromString(String unitName) {
+        return Arrays.stream(Units.values()).filter(unit -> unit.unitName.equals(unitName)).findFirst()
+                .orElse(Units.UNKNOWN);
     }
 }

@@ -3,15 +3,13 @@ package fooddatacentral;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Client {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Load FoodDataCentral
-        String apiKey = System.getenv("FOOD_API_KEY");
+        // String apiKey = System.getenv("FOOD_API_KEY");
+        String apiKey = "REMOVED_SECRET";
         FoodDataCentral fdc = new FoodDataCentral(apiKey);
 
         // Get one food by ID
@@ -22,13 +20,15 @@ public class Client {
             System.out.println(food.getDescription());
             System.out.println(food.getIngredients());
 
-            // List<Nutrient> nutrients = food.getLabelNutrients();
-            // for (Nutrient nutrient : nutrients) {
-            //     NutrientType type = nutrient.getNutrientType();
-            //     Units unit = nutrient.getUnits();
-            //     System.out.println("Nutrient type: " + type + ". Amount: " + nutrient.getAmount() + " " + unit);
-            // }
+            List<Nutrient> nutrients = food.getNutrients();
+            for (Nutrient nutrient : nutrients) {
+                NutrientType type = nutrient.getNutrientType();
+                Units unit = nutrient.getUnits();
+                System.out.println("Nutrient type: " + type + ". Amount: " + nutrient.getAmount() + " " + unit);
+            }
         }
+
+        System.exit(0);
 
         // Get a list of foods by IDs
         List<Food> foods = fdc.getFoods(List.of("2144261", "2120496"));
@@ -38,8 +38,6 @@ public class Client {
             System.out.println(food.getDescription());
             System.out.println(food.getIngredients());
         }
-
-        System.exit(0);
 
         // Setting a page size of 10 so each page will contain 10 foods
         fdc.setPageSize(10);
@@ -53,7 +51,7 @@ public class Client {
 
         // Get the 11th page of foods but sort them in ascending order by name of food
         Iterator<Food> foodsPageSorted = fdc.listFoods(
-            11, List.of(FoodSortableAttributes.NAME), SortOrder.ASCENDING);
+                11, List.of(FoodSortableAttributes.NAME), SortOrder.ASCENDING);
         while (foodsPage.hasNext()) {
             Food food = foodsPage.next();
             // Do something with the food
