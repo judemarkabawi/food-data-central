@@ -23,7 +23,7 @@ public class SearchQuery {
     private int pageNumber = DEFAULT_PAGE_NUMBER;
     private int pageSize = DEFAULT_PAGE_SIZE;
     private FoodSortableAttributes queryField = null;
-    private List<FoodSortableAttributes> sortBy = new ArrayList<FoodSortableAttributes>();
+    private FoodSortableAttributes sortBy = null;
     private SortOrder sortOrder = SortOrder.NONE;
 
     /**
@@ -43,25 +43,22 @@ public class SearchQuery {
      * @param sortBy list of attributes to sort the returned values by, prioritizes first item then proceeding items
      * @param sortOrder what order to sort the returned values by
      * @throws IllegalArgumentException if either pageNumber or pageSize are &lt;= 0
-     * @throws NullPointerException if the sortBy list is null
-     * @throws IllegalStateException if the passed in sortBy is an empty list, since sort order needs a sort by
+     * @throws NullPointerException if the sortBy is null
      */
     public SearchQuery(String query, int pageNumber, int pageSize, FoodSortableAttributes queryField,
-                       List<FoodSortableAttributes> sortBy, SortOrder sortOrder){
+                       FoodSortableAttributes sortBy, SortOrder sortOrder){
         if (pageNumber < 1 || pageSize < 1) {
             throw new IllegalArgumentException("Page number and size must be > 0.");
         }
         if (sortBy == null) {
-            throw new NullPointerException("sortBy cannot be a null List");
+            throw new NullPointerException("sortBy cannot be a null pointer.");
         }
-        if (sortBy.isEmpty()) {
-            throw new IllegalStateException("Cannot set sort order without 'sort by'.");
-        }
+
         this.query = query;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.queryField = queryField;
-        this.sortBy.addAll(sortBy);
+        this.sortBy = sortBy;
         this.sortOrder = sortOrder;
     }
 
@@ -144,25 +141,24 @@ public class SearchQuery {
     /**
      * Resets the query field to the default value. This will apply query to all available attributes/fields.
      */
-    public void setQueryFieldDefault() {
+    public void setQueryFieldToDefault() {
         this.queryField = null;
     }
 
     /**
      * Retrieves current sort by field. Null if there is none
-     * @return copy of list of attributes to sort by
+     * @return attribute to sort by
      */
-    public List<FoodSortableAttributes> getSortBy() {
-        return Collections.unmodifiableList(this.sortBy);
+    public FoodSortableAttributes getSortBy() {
+        return this.sortBy;
     }
 
     /**
      * Set sort by to new value.
-     * @param sortBy list of new column/attribute to sort by, prioritizes first item in list then proceeding items
+     * @param sortBy column/attribute to sort by
      */
-    public void setSortBy(List<FoodSortableAttributes> sortBy) {
-        this.sortBy.clear();
-        this.sortBy.addAll(sortBy);
+    public void setSortBy(FoodSortableAttributes sortBy) {
+        this.sortBy = sortBy;
     }
 
     /**
@@ -179,10 +175,29 @@ public class SearchQuery {
      * @throws IllegalStateException if there is no current "sort by"
      */
     public void setSortOrder(SortOrder sortOrder) {
-        if (this.sortBy.isEmpty()) {
+        if (this.sortBy == null) {
             throw new IllegalStateException("Cannot set sort order without 'sort by'.");
         }
         this.sortOrder = sortOrder;
+    }
+
+    public String getParameterString() {
+        String query = "";
+        query += "?query=" + this.query;
+        query += "&dataType=Branded";
+        query += "&pageNumber=" + this.pageNumber;
+        query += "&pageSize=" + this.pageSize;
+        if (this.queryField != null) {
+            query += "&queryField=" + this.queryField.getAttributeString();
+        }
+        if (this.sortBy != null) {
+            query += "&sortBy=" + this.sortBy.getAttributeString();
+        }
+        if (this.sortBy != null && this.sortOrder != null) {
+            query += "&sortOrder=" + this.sortOrder.getSortOrderString();
+        }
+
+        return query;
     }
 
 }
