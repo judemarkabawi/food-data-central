@@ -1,9 +1,5 @@
 package fooddatacentral;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Search query class utilized for the search function in FoodDataCentral.
  * If not specified, the search will default to the following:
@@ -183,7 +179,7 @@ public class SearchQuery {
 
     public String getParameterString() {
         String query = "";
-        query += "?query=" + this.query;
+        query += "&query=" + this.query;
         query += "&dataType=Branded";
         query += "&pageNumber=" + this.pageNumber;
         query += "&pageSize=" + this.pageSize;
