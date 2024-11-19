@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fooddatacentral.Schemas.BrandedFoodItem;
+import fooddatacentral.Schemas.SearchResult;
 
 /**
  * FoodDataCentral class that wraps the REST API provided by the FDC.
@@ -50,7 +51,7 @@ public class FoodDataCentral {
      * if it is present.
      * 
      * @param fdcId the id of the food item to retrieve
-     * @throws InvalidArgumentException If the ID supplied is not a valid food item
+     * @throws IllegalArgumentException If the ID supplied is not a valid food item
      *                                  ID
      * @return The food item
      */
@@ -92,16 +93,32 @@ public class FoodDataCentral {
     }
 
     /**
-     * Retrieve a list of food items for pagination.
-     * Specify the page number to return. The default page size is 50.
+     * Retrieve an iterator of food items for pagination.
+     * Specify the page number and page size to return.
      * Returns an empty iterator for any invalid page number.
      * 
      * @param pageNumber which page to return
+     * @param pageSize size of the page, number of items on the page
      * @return an iterator containing all the food items on the corresponding page
      *         for the currently set page size.
+     * @throws IllegalArgumentException if pageSize is &lt;= 0
      */
-    public Iterator<Food> listFoods(int pageNumber) {
-        return null;
+    public Iterator<Food> listFoods(int pageNumber, int pageSize) throws IOException, InterruptedException {
+        if (pageSize < 1) {
+            throw new IllegalArgumentException("Page size cannot be less than 1.");
+        }
+        String dataTypeQuery = "?dataType=Branded";
+        HttpResponse<String> response = Utility
+                .sendApiRequest(withApiKeyParam(Utility.API_FOOD_LIST_URL) + dataTypeQuery
+                        + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize);
+
+        //Parse
+        ObjectMapper mapper = new ObjectMapper();
+        List<BrandedFoodItem> brandedFoods = mapper.readValue(response.body(),
+                new TypeReference<List<BrandedFoodItem>>() {
+                });
+        Iterator<Food> foods = brandedFoods.stream().map(food -> new Food(food, apiKey)).toList().iterator();
+        return foods;
     }
 
     /**
@@ -111,33 +128,30 @@ public class FoodDataCentral {
      * Returns an empty iterator for any invalid page number.
      * 
      * @param pageNumber which page to return
-     * @param sortBy list of which attribute to sort by, prioritizes first item in list, then proceeding items
+     * @param pageSize size of the page to return (number of items/food on page)
+     * @param sortBy attribute to sort by
      * @param sortOrder the order to sort the food
      * @return an iterator containing all the food items on the corresponding page for the currently set page size.
+     * @throws IllegalArgumentException if pageSize is &lt;= 0
      */
-    public Iterator<Food> listFoods(int pageNumber, List<FoodSortableAttributes> sortBy, SortOrder sortOrder) {
-        return null;
-    }
+    public Iterator<Food> listFoods(int pageNumber, int pageSize, FoodSortableAttributes sortBy, SortOrder sortOrder)
+    throws IOException, InterruptedException {
+        if (pageSize < 1) {
+            throw new IllegalArgumentException("Page size cannot be less than 1.");
+        }
+        String dataTypeQuery = "?dataType=Branded";
+        HttpResponse<String> response = Utility
+                .sendApiRequest(withApiKeyParam(Utility.API_FOOD_LIST_URL) + dataTypeQuery
+                        + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize
+                        + "&sortBy=" + sortBy.getAttributeString() + "&sortOrder=" + sortOrder.getSortOrderString());
 
-    /**
-     * Returns current page size for listFoods.
-     * 
-     * @return int representing the current number of items on a page returned in
-     *         listFoods
-     */
-    public int getPageSize() {
-        return 50;
-    }
-
-    /**
-     * Sets page size returned in listFoods to specified number.
-     * Note that the performance of listFoods may be impacted by larger numbers.
-     * 
-     * @param pageSize number that each page will return in listFoods. Cannot be
-     *                 negative.
-     * @throws IllegalArgumentException if {@code pageSize < 0}.
-     */
-    public void setPageSize(int pageSize) {
+        //Parse
+        ObjectMapper mapper = new ObjectMapper();
+        List<BrandedFoodItem> brandedFoods = mapper.readValue(response.body(),
+                new TypeReference<List<BrandedFoodItem>>() {
+                });
+        Iterator<Food> foods = brandedFoods.stream().map(food -> new Food(food, apiKey)).toList().iterator();
+        return foods;
     }
 
     /**
@@ -147,7 +161,19 @@ public class FoodDataCentral {
      * @return iterator of the found food items. If not found, will be empty
      * @throws NullPointerException for null argument
      */
-    public Iterator<Food> searchFoods(SearchQuery query) {
-        return null;
+    public Iterator<Food> searchFoods(SearchQuery query) throws IOException, InterruptedException {
+        if (query == null) {
+            throw new NullPointerException("Query cannot be null.");
+        }
+        HttpResponse<String> response = Utility
+                .sendApiRequest(withApiKeyParam(Utility.API_FOOD_LIST_URL) + query.getParameterString());
+
+        //Parse
+        ObjectMapper mapper = new ObjectMapper();
+        SearchResult searchResult = mapper.readValue(response.body(),
+                new TypeReference<SearchResult>() {
+                });
+        Iterator<Food> foods = searchResult.foods.stream().map(food -> new Food(food, apiKey)).toList().iterator();
+        return foods;
     }
 }

@@ -7,13 +7,25 @@ public enum SortOrder {
     /**
      * Sort in ascending order.
      */
-    ASCENDING,
+    ASCENDING("ascending"),
     /**
      * Sort in descending order.
      */
-    DESCENDING,
+    DESCENDING("descending"),
     /**
      * Do not sort.
      */
-    NONE
+    NONE("none");
+
+    private final String sortOrder;
+
+    SortOrder(String sortOrder) {this.sortOrder = sortOrder;}
+
+    /**
+     * Gets string representation of the sort order
+     * @return sort order
+     */
+    public String getSortOrderString() {
+        return this.sortOrder;
+    }
 }

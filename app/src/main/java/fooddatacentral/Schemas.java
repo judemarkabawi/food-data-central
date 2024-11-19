@@ -283,4 +283,97 @@ class Schemas {
             return Optional.of(brandedFoodCategory);
         }
     }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class SearchResultFood implements FoodItem {
+        final int fdcId;
+        final String dataType;
+        final String description;
+        // final AbridgedFoodNutrient foodNutrients; -- probably don't need now
+        final String foodCode;
+        final List<FoodNutrient> foodNutrients;
+        final String publicationDate;
+        final String scientificName;
+        final String brandOwner;
+        final String gtinUpc;
+        final String ingredients;
+        final String ndbNumber;
+        final String additionalDescriptions;
+        final String allHighlightFields;
+        // score is relative score indicating how well the food matches the search criteria.
+        final float score;
+
+        @JsonCreator
+        SearchResultFood(
+                @JsonProperty("fdcId") int fdcId,
+                @JsonProperty("dataType") String dataType,
+                @JsonProperty("description") String description,
+                @JsonProperty("foodCode") String foodCode,
+                @JsonProperty("foodNutrients") List<FoodNutrient> foodNutrients,
+                @JsonProperty("publicationDate") String publicationDate,
+                @JsonProperty("scientificName") String scientificName,
+                @JsonProperty("brandOwner") String brandOwner,
+                @JsonProperty("gtinUpc") String gtinUpc,
+                @JsonProperty("ingredients") String ingredients,
+                @JsonProperty("ndbNumber") String ndbNumber,
+                @JsonProperty("additionalDescriptions") String additionalDescriptions,
+                @JsonProperty("allHighlightFields") String allHighlightFields,
+                @JsonProperty("score") float score) {
+            this.fdcId = fdcId;
+            this.dataType = dataType;
+            this.description = description;
+            this.foodCode = foodCode;
+            this.foodNutrients = foodNutrients;
+            this.publicationDate = publicationDate;
+            this.scientificName = scientificName;
+            this.brandOwner = brandOwner;
+            this.gtinUpc = gtinUpc;
+            this.ingredients = ingredients;
+            this.ndbNumber = ndbNumber;
+            this.additionalDescriptions = additionalDescriptions;
+            this.allHighlightFields = allHighlightFields;
+            this.score = score;
+        }
+
+        @Override
+        public String getDataType() {
+            return dataType;
+        }
+
+        @Override
+        public String getDescription() {
+            return description;
+        }
+
+        @Override
+        public int getFdcId() {
+            return fdcId;
+        }
+
+        @Override
+        public String getPublicationDate() {
+            return publicationDate;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class SearchResult {
+        // Ignore the FoodSearchCritera field for now, since this just returns the query parameters
+        final int totalHits;
+        final int currentPage;
+        final int totalPages;
+        final List<SearchResultFood> foods;
+
+        @JsonCreator
+        SearchResult(
+                @JsonProperty("totalHits") int totalHits,
+                @JsonProperty("currentPage") int currentPage,
+                @JsonProperty("totalPages") int totalPages,
+                @JsonProperty("foods") List<SearchResultFood> foods) {
+            this.totalHits = totalHits;
+            this.currentPage = currentPage;
+            this.totalPages = totalPages;
+            this.foods = foods;
+        }
+    }
 }
